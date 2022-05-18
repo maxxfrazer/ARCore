@@ -8,18 +8,24 @@ let package = Package(
     platforms: [.iOS(.v13)],
     products: [
         .library(name: "ARCoreAugmentedFaces", targets: ["ARCoreAugmentedFaces"]),
-        .library(name: "ARCoreBase", targets: ["ARCoreBase"]),
+        .library(name: "ARCoreBase", targets: ["ARCoreBase_Swift"]),
         .library(name: "ARCoreCloudAnchors", targets: ["ARCoreCloudAnchors"]),
         .library(name: "ARCoreGARSession", targets: ["ARCoreGARSession"]),
         .library(name: "ARCoreGeospatial", targets: ["ARCoreGeospatial"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/google/GoogleDataTransport.git", from: .init(9, 1, 2))
     ],
     targets: [
         .binaryTarget(
             name: "ARCoreAugmentedFaces",
             url: "https://github.com/maxxfrazer/ARCore/releases/download/1.31.0-rc.1/ARCoreAugmentedFaces.xcframework.zip",
             checksum: "70e9f2a65008508e86af3a0ea20e309df3bc00745451e2c21b3612c7f8f15bf6"
+        ),
+        .target(
+            name: "ARCoreBase_Swift",
+            dependencies: ["ARCoreBase", "GoogleDataTransport"],
+            path: "Sources/ARCoreBase", publicHeadersPath: "Headers/ARCoreBase"
         ),
         .binaryTarget(
             name: "ARCoreBase",
